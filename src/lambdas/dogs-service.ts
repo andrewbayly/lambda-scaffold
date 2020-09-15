@@ -11,18 +11,11 @@ class DogsService {
 
     const breeds = payload.message
 
-    const result = []
-
-    const breedKeys = Object.keys(breeds)
-
-    for (let i = 0; i < breedKeys.length; i += 1) {
-      const breed = breedKeys[i]
-      result.push(breed)
-      const subbreeds = breeds[breed]
-      for (let j = 0; j < subbreeds.length; j += 1) {
-        result.push(`${subbreeds[j]} ${breed}`)
-      }
-    }
+    const result = Object.keys(breeds)
+      .map((breed: string) =>
+        [breed].concat(breeds[breed].map((subbreed: string) => `${subbreed} ${breed}`)),
+      )
+      .reduce((acc, val) => acc.concat(val), [])
 
     return result
   }
